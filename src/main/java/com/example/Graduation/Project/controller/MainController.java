@@ -1,8 +1,6 @@
 package com.example.Graduation.Project.controller;
 
-import com.example.Graduation.Project.dto.ComplaintsRequest;
-import com.example.Graduation.Project.dto.PredictRequest;
-import com.example.Graduation.Project.dto.PredictionResponse;
+import com.example.Graduation.Project.dto.*;
 import com.example.Graduation.Project.service.MainService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Main", description = "Endpoints related to predictions and user complaints")
+@Tag(name = "Main", description = "Main Functionalities")
 public class MainController {
 
     private final MainService mainService;
@@ -36,5 +34,22 @@ public class MainController {
             Authentication connectedUser
     ) {
         return mainService.makeComplaint(complaintsRequest, connectedUser);
+    }
+
+    @PostMapping("/addState")
+    @Operation(summary = "Adding State", description = "Allows authenticated users to add States they want to sale")
+    public ResponseEntity<String> addState(
+            Authentication connectedUser ,
+            @RequestBody AddStatesRequest request
+            ){
+        return mainService.addState(connectedUser,request);
+    }
+
+    @PostMapping("/search")
+    @Operation(summary = "Search State", description = "Allows all users to search on any state")
+    public ResponseEntity<SearchResponse> searchForState(
+            @RequestBody SearchRequest searchRequest
+    ){
+        return mainService.searchState(searchRequest);
     }
 }

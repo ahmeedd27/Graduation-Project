@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
+
 
 @Entity
 @Data
@@ -18,7 +19,7 @@ public class States {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String address;
-    private BigInteger price;
+    private double price;
     private int rooms;
     private String description;
     private String imageUrl;

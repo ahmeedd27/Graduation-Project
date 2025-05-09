@@ -1,10 +1,10 @@
 package com.example.Graduation.Project.service;
 
 import com.example.Graduation.Project.dao.ContactsRepo;
-import com.example.Graduation.Project.dto.ComplaintsRequest;
-import com.example.Graduation.Project.dto.PredictRequest;
-import com.example.Graduation.Project.dto.PredictionResponse;
+import com.example.Graduation.Project.dao.StatesRepo;
+import com.example.Graduation.Project.dto.*;
 import com.example.Graduation.Project.model.Contacts;
+import com.example.Graduation.Project.model.States;
 import com.example.Graduation.Project.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ public class MainService {
 
     private final RestTemplate restTemplate;
     private final ContactsRepo contactsRepo;
+    private final StatesRepo statesRepo;
 
     public ResponseEntity<PredictionResponse> predict(@Valid PredictRequest predictRequest) {
         String flaskUrl = "https://web-production-dd163.up.railway.app/predict";
@@ -39,5 +40,31 @@ public class MainService {
         contactsRepo.save(contact);
         return ResponseEntity
                 .ok("Your Complaint has been saved successfully , we will review it and come back soon.");
+    }
+
+    public ResponseEntity<String> addState(Authentication connectedUser, AddStatesRequest request) {
+        User user=(User) connectedUser.getPrincipal();
+        States state= States.builder()
+                .user(user)
+                .description(request.getDescription())
+                .rooms(request.getRooms())
+                .imageUrl(request.getImageUrl())
+                .address(request.getAddress())
+                .price(request.getPrice())
+                .build();
+        statesRepo.save(state);
+        return  ResponseEntity.ok("Saved Successfully");
+    }
+
+    public ResponseEntity<SearchResponse> searchState(SearchRequest searchRequest) {
+      States state=statesRepo.getState(searchRequest.getLocation()
+              , searchRequest.getPrice() , searchRequest.getNumberOfRooms());
+      return ResponseEntity.ok( SearchResponse.builder()
+              .numberOfRooms(state.getRooms())
+              .location(state.getAddress())
+              .description(state.getDescription())
+              .imageUrl(state.getImageUrl())
+              .price(state.getPrice())
+              .build());
     }
 }
