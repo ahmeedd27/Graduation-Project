@@ -22,7 +22,7 @@ public class MainService {
     private final StatesRepo statesRepo;
 
     public ResponseEntity<PredictionResponse> predict(@Valid PredictRequest predictRequest) {
-        String flaskUrl = "https://web-production-dd163.up.railway.app/predict";
+        String flaskUrl = "https://web-production-dff89.up.railway.app/predict";
          return ResponseEntity.ok( restTemplate.postForEntity(
             flaskUrl ,
             predictRequest ,
