@@ -39,6 +39,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleNoSuchElement(NoSuchElementException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, "Not Found", ex.getMessage());
     }
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, Object>> handleRunTime(RuntimeException ex) {
+        return buildResponse(HttpStatus.NOT_FOUND, "something goes wrong in adding state", ex.getMessage());
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", "Something went wrong. Please try again later.", ex.getMessage());

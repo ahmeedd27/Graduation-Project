@@ -38,7 +38,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://architectural-kaitlin-personal27-379c50a0.koyeb.app/",
+        configuration.setAllowedOrigins(Arrays.asList("https://nursing-emmi-personal27-84265416.koyeb.app/",
                 "http://localhost:5173/","https://graduation-project-xipl.onrender.com"
                 , "localhost:8080"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS" ,"PATCH"));
